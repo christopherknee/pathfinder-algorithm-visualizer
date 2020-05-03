@@ -2,6 +2,7 @@ package model;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 
 import java.util.ArrayList;
 
@@ -22,28 +23,19 @@ public class Board {
             for (int j = 0; j < size; j++) {
                 Block block = new Block(i*dim,j*dim,this);
                 Rectangle r = new Rectangle(dim,dim);
-                if (i % 2 == 0) {
-                    if (j % 2 == 0) {
-                        r.setFill(Color.CORNFLOWERBLUE);
-                    } else {
-                        r.setFill(Color.GRAY);
-                    }
-                }
-                if (i % 2 != 0) {
-                    if (j % 2 == 0) {
-                        r.setFill(Color.GRAY);
-                    } else {
-                        r.setFill(Color.CORNFLOWERBLUE);
-                    }
-                }
-
-
+                r.setStroke(Color.BLACK);
+                r.setStrokeType(StrokeType.INSIDE);
+                r.setFill(Color.CORNFLOWERBLUE);
                 block.setRect(r);
                 board.get(i).add(block);
             }
         }
 
 
+    }
+
+    public Block getBlock(int i, int j) {
+        return this.board.get(i).get(j);
     }
 
     public ArrayList<ArrayList<Block>> getBoard() {

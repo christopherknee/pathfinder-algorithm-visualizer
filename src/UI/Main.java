@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -32,20 +33,12 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Board board;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         startButton = new Button("Start");
         GridPane root = new GridPane();
-
         initializeBoard();
-        for (int i = 0; i < BOARD_DIMENSION; i++) {
-            for (int j = 0; j < BOARD_DIMENSION; j++) {
-                root.add(board.getBoard().get(i).get(j).getRect(), board.getBoard().get(i).get(j).getxPos(),board.getBoard().get(i).get(j).getyPos());
-            }
-        }
-
-
-
-
+        initializeRoot(root);
+        initializeRectEvent();
         primaryStage.setTitle("VisualPath");
 
 
@@ -55,6 +48,34 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    private void initializeRectEvent() {
+        for (int i = 0; i < BOARD_DIMENSION; i++) {
+            for (int j = 0; j < BOARD_DIMENSION; j++) {
+                final int finalJ = j;
+                final int finalI = i;
+                board.getBlock(i,j).getRect().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if (board.getBlock(finalI, finalJ).getRect().getFill() == Color.CORNFLOWERBLUE) {
+                            board.getBlock(finalI,finalJ).getRect().setFill(Color.ORANGERED);
+                        } else {
+                            board.getBlock(finalI,finalJ).getRect().setFill(Color.CORNFLOWERBLUE);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    private void initializeRoot(GridPane root) {
+        for (int i = 0; i < BOARD_DIMENSION; i++) {
+            for (int j = 0; j < BOARD_DIMENSION; j++) {
+                root.add(board.getBlock(i,j).getRect(),
+                        board.getBlock(i,j).getxPos(),board.getBlock(i,j).getyPos());
+            }
+        }
     }
 
 
