@@ -28,8 +28,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     Scene scene;
     Button startButton;
-    final int BOX_DIMENSION = 40;
-    final int BOARD_DIMENSION = 25;
+    final int BOX_DIMENSION = 20;
+    final int BOARD_DIMENSION = 50;
     Board board;
 
     @Override
@@ -58,10 +58,20 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 board.getBlock(i,j).getRect().setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        if (board.getBlock(finalI, finalJ).getRect().getFill() == Color.CORNFLOWERBLUE) {
+                        if (board.getBlock(finalI, finalJ).getRect().getFill() == Color.CORNFLOWERBLUE && !board.getStartReady()) {
                             board.getBlock(finalI,finalJ).getRect().setFill(Color.ORANGERED);
-                        } else {
+                            board.setStartReady(true);
+                        } else if (board.getStartReady() && board.getBlock(finalI, finalJ).getRect().getFill() == Color.ORANGERED) {
                             board.getBlock(finalI,finalJ).getRect().setFill(Color.CORNFLOWERBLUE);
+                            board.setStartReady(false);
+                        }
+
+                        if (!board.getEndReady() && board.getBlock(finalI, finalJ).getRect().getFill() == Color.CORNFLOWERBLUE && board.getStartReady()) {
+                            board.getBlock(finalI,finalJ).getRect().setFill(Color.LIGHTGREEN);
+                            board.setEndReady(true);
+                        } else if (board.getEndReady() && board.getBlock(finalI, finalJ).getRect().getFill() == Color.LIGHTGREEN) {
+                            board.getBlock(finalI, finalJ).getRect().setFill(Color.CORNFLOWERBLUE);
+                            board.setEndReady(false);
                         }
                     }
                 });

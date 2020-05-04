@@ -9,8 +9,8 @@ public class Block {
     int yPos;
 
     ArrayList<Block> adjBlocks;
-    Board board;
-    Rectangle rect;
+    Board board;                                  //Every Block has a Board it belongs to
+    Rectangle rect;                               //rect is graphical representation of a Block
 
     public Block(int x, int y, Board b) {
         this.xPos = x;
