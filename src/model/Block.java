@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -43,5 +44,11 @@ public class Block {
 
     private void intAdjBlocks(Board b) {
 
+    }
+
+    public void visit() {
+        if (getRect().getFill() != Color.LIGHTGREEN) {
+            getRect().setFill(Color.ORANGERED);
+        }
     }
 }
